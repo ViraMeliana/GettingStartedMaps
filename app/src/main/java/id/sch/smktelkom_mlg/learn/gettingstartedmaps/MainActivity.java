@@ -1,82 +1,80 @@
 package id.sch.smktelkom_mlg.learn.gettingstartedmaps;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    static final CameraPosition TBN = CameraPosition.builder()
-            .target(new LatLng(1.2836, 103.8604))
-            .zoom(17)
-            .bearing(90)
-            .tilt(45)
-            .build();
-    static final CameraPosition PAPUA = CameraPosition.builder()
-            .target(new LatLng(48.8584, 2.2945))
-            .zoom(17)
+    static final CameraPosition JTG = CameraPosition.builder()
+            .target(new LatLng(-6.858623, 111.642224))
+            .zoom(15)
             .bearing(0)
-            .tilt(45)
-            .build();
-    static final CameraPosition BALI = CameraPosition.builder()
-            .target(new LatLng(37.5665, 126.9780))
-            .zoom(17)
-            .bearing(0)
-            .tilt(45)
-            .build();
-    static final CameraPosition JKT = CameraPosition.builder()
-            .target(new LatLng(52.3702, 4.8952))
-            .zoom(17)
-            .bearing(90)
             .tilt(45)
             .build();
 
     GoogleMap m_map;
     boolean mapReady = false;
+    MarkerOptions house;
+    MarkerOptions quba;
+    MarkerOptions pasar;
+    MarkerOptions kec;
+    MarkerOptions koramil;
+    MarkerOptions smp;
+
+    @Override
+    public Resources getResources() {
+        return super.getResources();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnPapua = (Button) findViewById(R.id.btnPapua);
-        btnPapua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mapReady)
-                    flyTo(PAPUA);
-            }
-        });
 
-        Button btnBali = (Button) findViewById(R.id.btnBali);
-        btnBali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mapReady)
-                    flyTo(BALI);
-            }
-        });
+        house = new MarkerOptions()
+                .position(new LatLng(-6.886892, 111.654675))
+                .title("My House")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
 
-        Button btnJkt = (Button) findViewById(R.id.btnJkt);
-        btnJkt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mapReady)
-                    flyTo(JKT);
-            }
-        });
+        quba = new MarkerOptions()
+                .position(new LatLng(-6.887492, 111.656472))
+                .title("Masjid Ar-rahmah")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
 
+        pasar = new MarkerOptions()
+                .position(new LatLng(-6.879152, 111.658757))
+                .title("Pasar Jatirogo")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
+
+        kec = new MarkerOptions()
+                .position(new LatLng(-6.885809, 111.658339))
+                .title("Kantor Kec. Jatirogo")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
+
+        koramil = new MarkerOptions()
+                .position(new LatLng(-6.888232, 111.662722))
+                .title("Koramil Jatirogo")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
+
+        smp = new MarkerOptions()
+                .position(new LatLng(-6.884760, 111.657529))
+                .title("SMPN 1 Jatirogo")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_on_black_24dp));
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -88,9 +86,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         toast.show();
         mapReady = true;
         m_map = map;
-        m_map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        flyTo(TBN);
-
+        m_map.addMarker(house);
+        m_map.addMarker(quba);
+        m_map.addMarker(pasar);
+        m_map.addMarker(kec);
+        m_map.addMarker(koramil);
+        m_map.addMarker(smp);
+        flyTo(JTG);
     }
 
     @Override
@@ -106,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
             }
 
